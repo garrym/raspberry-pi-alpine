@@ -1,4 +1,4 @@
-echo -e "/media/mmcblk0p1/apks\nhttp://dl-cdn.alpinelinux.org/alpine/v3.9/main\nhttp://dl-cdn.alpinelinux.org/alpine/v3.9/community" > /etc/apk/repositories
+echo -e "/media/mmcblk0p1/apks\nhttp://dl-cdn.alpinelinux.org/alpine/v3.9/main\nhttp://dl-cdn.alpinelinux.org/alpine/v3.9/community\nhttp://dl-cdn.alpinelinux.org/alpine/edge/testing" > /etc/apk/repositories
 
 # Update packages to latest versions
 apk update
