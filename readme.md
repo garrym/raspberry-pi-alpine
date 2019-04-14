@@ -42,50 +42,49 @@ Due to Alpine being a barebones Linux distribution it can be a bit trickier to g
 
 - Now it's time to run setup. If you provided an answer file type the following:
 
-    setup-alpine -f /media/mmcblk0p1/<ANSWERFILE>
+    `setup-alpine -f /media/mmcblk0p1/<ANSWERFILE>`
 
-If you get anything wrong you can hit CTRL and C at the same time to cancel setup and start again. Just type setup-alpine again.
+If you get anything wrong you can hit CTRL+C at the same time to cancel setup and start again. Just type setup-alpine again.
 
-For DNS domain name type: local
-For DNS nameserver type: 1.1.1.1
+## Standard answers to setup questions
 
-Enter root password
+DNS domain name type: `local`
+DNS nameserver type: `1.1.1.1`
+Timezone: `UTC`
+For proxy type: `none`
+NTP client: `chrony`
+SSH server: `openssh`
+Enter where to store configs: `mmcblk0p1`
+APK cache directory: `/media/mmcblk0p1/cache`
 
-Timezone: UTC
+When choosing a mirror you can just press `f` this test the speed to all of the mirrors and choose the fastest, or `r` for a random mirror.
 
-For proxy type: none
-NTP client: chrony
+# Don't forget to commit
 
-When choosing a mirror you can just press f this test the speed to all of the mirrors and choose the fastest
+Once you have made all the changes you want, you need to commit them to disk by typing:
 
+`lbu commit -d`
 
-SSH server choose: openssh
+This ensures the changes are stored to disk and will re-apply when you restart.
 
-Enter where to store configs: mmcblk0p1 (your SD card)
-
-APK cache directory: /media/mmcblk0p1/cache
-
-Now write all the changes to disk by typing: lbu_commit
-
-
-Installation has now completed. You can test you set up the network connection by pinging 1.1.1.1
-
-
-Download the setup script here:
-
-apk add curl
-
-curl 
+Installation should now be complete.
 
 
+# Post-Install Setup
 
+There are some post-install setup scripts which will set up a number of things for you, such as:
 
+- Useful tools such as sudo, curl and nano
+- Standard user for logging in
+- Firewall installed and setup to block all traffic apart from SSH
+- SSH
+- Docker
 
+You can run these scripts individually or all together.  To set them all up run the following commands:
 
-Install tools - bash, curl, sudo
+`apk add curl`
+`curl -o setup.sh -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/garrym/raspberry-pi-alpine/master/setup.sh`
+`chmod +x setup.sh`
+`./setup.sh`
 
-apk add curl
-apk add sudo
-apk add nano
-
-How to set up bash
+This will automatically run everything in order.  However if you wanted to run individual scripts, just use the same code above and replace `setup.sh` with `setup-packages.sh`, `setup-user.sh`, `setup-firewall.sh`, `setup-ssh.sh` or `setup-docker.sh` instead.
