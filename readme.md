@@ -10,8 +10,13 @@ Alpine Linux is a fast, lightweight Linux distribution that's ideal for the Rasp
 Due to Alpine being a barebones Linux distribution it can be a bit trickier to get things set up than say Ubuntu or Raspbian. You'll find that even some basic packages you're used to won't be available (however they are very easy to install).  Using Alpine is definitely worth the effort though as you'll learn a huge amount about Linux while working with it.
 
 ## Useful resources
+- https://wiki.alpinelinux.org/wiki/Installation
 - https://wiki.alpinelinux.org/wiki/Raspberry_Pi#Installation
-
+- https://wiki.alpinelinux.org/wiki/Alpine_setup_scripts
+- https://www.raspberrypi.org/documentation/configuration/config-txt/
+- https://wiki.alpinelinux.org/wiki/Configure_Networking
+- https://wiki.alpinelinux.org/wiki/Classic_install_or_sys_mode_on_Raspberry_Pi
+- https://beta.docs.alpinelinux.org/user-handbook/0.1a/Installing/setup_alpine.html
 
 ## Setting up the SD card (Windows)
 - Use an empty SD card of minimum 4GB, class 10 is the best as it'll be nice and fast. Don't use an SD card with data on it, *following these instructions will mean you lose all data on the SD card*.
