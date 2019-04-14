@@ -13,6 +13,14 @@ Due to Alpine being a barebones Linux distribution it can be a bit trickier to g
 - https://wiki.alpinelinux.org/wiki/Raspberry_Pi#Installation
 
 
+## Setting up the SD card (Windows)
+- Use an empty SD card of minimum 4GB, class 10 is the best as it'll be nice and fast. Don't use an SD card with data on it, *following these instructions will mean you lose all data on the SD card*.
+- Plug the SD card into your computer then go to start and type `diskmgmt` then enter. The Windows Disk Management application will open.
+- Locate your SD card on the listing and create a primary partition formatted as FAT32.
+- Once the card is formatted and appearing as a drive in Windows drive listing you can move on to the next step.
+
+## Find the right Alpine version for your Raspberry Pi
+
 ## Installation
 - Plug the SD card into your computer and open Disk Management (instructions on how to do this, with screenshots)
 - Create a 512MB primary partition and assign a drive letter
