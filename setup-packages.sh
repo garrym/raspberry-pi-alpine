@@ -1,7 +1,4 @@
-# Edit /etc/apk/repositories and ensure the following lines are uncommented:
-# http://<mirror>/alpine/<version>/main
-# http://<mirror>/alpine/<version>/community
-# http://<mirror>/alpine/edge/testing
+echo -e "/media/mmcblk0p1/apks\nhttp://dl-cdn.alpinelinux.org/alpine/v3.9/main\nhttp://dl-cdn.alpinelinux.org/alpine/v3.9/community" > /etc/apk/repositories
 
 # Update packages to latest versions
 apk update
