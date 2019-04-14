@@ -1,6 +1,13 @@
-# !!! Work in progress !!!
-
 # Instructions for installing Alpine Linux on a Raspberry Pi
+
+## Disclaimer
+Please note: This is currently work in progress.
+
+## Introduction
+
+Alpine Linux is a fast, lightweight Linux distribution that's ideal for the Raspberry Pi. It's designed to be run on minimal hardware so it comes with a barebones setup and limited number of packages, making it ideal for those who want to know exactly what is running on their Raspberry Pi to have the minimum disk space and background processor usage. 
+
+Due to Alpine being a barebones Linux distribution it can be a bit trickier to get things set up than say Ubuntu or Raspbian. You'll find that even some basic packages you're used to won't be available (however they are very easy to install).  Using Alpine is definitely worth the effort though as you'll learn a huge amount about Linux while working with it.
 
 ## Useful resources
 - https://wiki.alpinelinux.org/wiki/Raspberry_Pi#Installation
