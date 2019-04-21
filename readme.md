@@ -1,32 +1,6 @@
 # Installing Alpine Linux on a Raspberry Pi
 
-### Work in progress
-
-## Introduction
-
-Alpine is a fast, lightweight Linux distribution that's easy to install and ideal for the Raspberry Pi. It's designed to be run on minimal hardware so it comes with a barebones setup and limited number of packages, making it a great choice for those who want to know exactly what is running on their Raspberry Pi while also using minimal disk space and minimising processor utilisation.
-
-Due to Alpine being a barebones Linux distribution it can be a bit trickier to get things set up than say Ubuntu or Raspbian. You will find that even some basic packages you're used to won't be available from a standard installation, but everything is very easy to install.  You get to install just the tools you need to do the job.
-
-Working with Alpine Linux is definitely worth the effort as you'll learn a huge amount about Linux and understand how to install applications that we usually take for granted in more widely used distributions.
-
-
-
-## Alpine Concepts
-
-### Read-only file system
-
-The installation mode we will be using for the Raspberry Pi is called `sys mode` and by default this is a read-only file system. This means any applications you install or configuration changes you make will not be saved after restarting.  I prefer this setting as the Raspberry Pi feels more like an immutable appliance rather than a computer with mutable data.
-
-In order to persist any changes you will need to commit afterwards. You should do this regularly when working with Alpine by running the following command:
-
-`lbu commit -d`
-
-Once you have done this all changes will be saved and be present after restarting.
-
-It is possible to set up the Raspberry Pi to do a classic install (normal writable file system) but this guide won't cover that.
-
-
+Alpine is a fast, lightweight Linux distribution that's easy to install and ideal for the Raspberry Pi. It's designed to be run on minimal hardware so it comes with a barebones setup and limited number of packages which makes it a great choice for those who want to know exactly what applications are running while minimising disk space and processor usage.
 
 ### Installation
 1. Choose the correct Alpine version for your Raspberry Pi model
@@ -43,6 +17,53 @@ After you've followed these steps you will have a working Alpine installation
 
 
 Now you can following the instructions on [[Getting started with Alpine]] here.
+
+
+
+### Choosing the correct Alpine version
+
+There are currently 3 different versions of Alpine for the Raspberry Pi and choosing the right one for your model can be confusing as there isn't a great deal of information to advise you. 
+
+Here are my findings:
+
+| Raspberry Pi Model | armhf | armv7 | aarch64 |
+| ------------------ | ----- | ----- | ------- |
+| B+                 |       |       |         |
+| A+                 |       |       |         |
+| 2                  |       | Works |         |
+| 3                  |       | Works |         |
+
+#### armhf vs armv7 vs aarch64
+
+I'm going to investigate further and update this section.
+
+
+
+### Formatting the SD card
+
+For the purposes of this guide I'll be using the FAT32 partition scheme. As a user who primarily uses Windows I've found that the easiest way to get started with Alpine is by formatting the entire SD card using FAT32 partition scheme.
+
+There are other partition schemes that may be more suitable for a Linux environment (e.g. ext4) but they do require a little more work to get up and running, they'll usually require a 3rd party partitioning tool as Windows does not natively support most Linux file system formats.  If you're choosing an alternative partition scheme you've probably got enough knowledge to know how to do it anyway.
+
+So to get started plug the SD card into your computer and open the disk management tool by typing `diskmgmt` in the start menu, then selecting the entry named 'Create and format hard disk partitions'.
+
+When the to
+
+The reason we use this tool over the 'This PC' view of drives in Windows 10 is that it shows you the physical disk, rather than just the formatted partitions. We need to make sure we delete all existing partitions on the SD card otherwise they will cause Alpine boot issues.
+
+
+
+- Plug the SD card into your computer then go to start and type `diskmgmt` then enter. The Windows Disk Management application will open.
+- Locate your SD card on the listing and create a primary partition formatted as FAT32.
+- Once the card is formatted and appearing as a drive in Windows drive listing you can move on to the next step.
+
+
+
+
+
+
+
+
 
 
 
@@ -87,26 +108,6 @@ The Raspberry Pi has some built in configuration that allows it to run in headle
 Try to restart the Raspberry Pi with the HDMI cable connected.
 
 
-
-**Detailed instructions - Formatting**
-
-Format the empty SD card to FAT32 on your chosen OS.  In Windows you can use the Disk Management application. I would recommend formatting the entire disk rather than making a small partition for Alpine to run on. This is because you can have some issues with apk cache causing you to run out of disk space. Run this by going to start and typing `diskmgmt` then enter.
-
-If you want a more advanced installation you could try to format using the ext4 partition scheme or create the partitions up front, but this would require either using Linux or a partition management tool in Windows (as it doesn't support ext4 natively).
-
-- Plug the SD card into your computer then go to start and type `diskmgmt` then enter. The Windows Disk Management application will open.
-- Locate your SD card on the listing and create a primary partition formatted as FAT32.
-- Once the card is formatted and appearing as a drive in Windows drive listing you can move on to the next step.
-
-
-
-
-
-**Detailed instructions - Choose the correct version for your Raspberry Pi model**
-
-armhf vs armv7 vs aarch64
-
-Which one works?
 
 **Detailed instructions - Extract the Alpine files and copy them to the SD card**
 
@@ -188,6 +189,32 @@ You can run these scripts individually or all together.  To set them all up run 
 `./setup.sh`
 
 This will automatically run everything in order.  However if you wanted to run individual scripts, just use the same code above and replace `setup.sh` with `setup-packages.sh`, `setup-user.sh`, `setup-firewall.sh`, `setup-ssh.sh` or `setup-docker.sh` instead.
+
+
+
+## Alpine Concepts
+
+Due to Alpine being a barebones Linux distribution it can be a bit trickier to get things set up than say Ubuntu or Raspbian. You will find that even some basic packages you're used to won't be available from a standard installation, but everything is very easy to install.  You get to install just the tools you need to do the job.
+
+Working with Alpine Linux is definitely worth the effort as you'll learn a huge amount about Linux and understand how to install applications that we usually take for granted in more widely used distributions.
+
+
+
+
+
+### Read-only file system
+
+The installation mode we will be using for the Raspberry Pi is called `sys mode` and by default this is a read-only file system. This means any applications you install or configuration changes you make will not be saved after restarting.  I prefer this setting as the Raspberry Pi feels more like an immutable appliance rather than a computer with mutable data.
+
+In order to persist any changes you will need to commit afterwards. You should do this regularly when working with Alpine by running the following command:
+
+`lbu commit -d`
+
+Once you have done this all changes will be saved and be present after restarting.
+
+It is possible to set up the Raspberry Pi to do a classic install (normal writable file system) but this guide won't cover that.
+
+
 
 
 
