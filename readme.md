@@ -10,7 +10,7 @@ Working with Alpine Linux is definitely worth the effort as you'll learn a huge 
 
 These installation instructions have been designed for absolute beginners to Raspberry Pi, Alpine and Linux in general.  If you have any issues while following them 
 
-1. [Choose the correct Alpine version for your Raspberry Pi model](ChooseAlpineVersion)
+1. [Choose the correct Alpine version for your Raspberry Pi model](#ChooseAlpineVersion)
 2. [Format your SD card](FormatSDCard)
 3. [Copy Alpine to the SD card](CopyAlpine)
 4. [(Optional) Add an answers file](AddAnswersFile)
@@ -24,19 +24,7 @@ After you've followed these steps you will have a working Alpine installation.  
 
 And if you're still stuck after all that please feel free to open an issue or send me a [Tweet](https://twitter.com/garrymarsland) and I'll do my best to help.
 
-## Installation
-
-
-
-- Now it's time to run setup. If you provided an answer file type the following:
-
-    `setup-alpine -f /media/mmcblk0p1/<ANSWERFILE>`
-
-If you get anything wrong you can hit CTRL+C at the same time to cancel setup and start again. Just type setup-alpine again.
-
-
-[ChooseAlpineVersion]
-### Choosing the correct Alpine version
+### <a id="ChooseAlpineVersion"></a> Choosing the correct Alpine version
 
 There are currently 3 different versions of Alpine for the Raspberry Pi on the [Alpine downloads page](https://alpinelinux.org/downloads/); `armhf`, `aarch64` and `armv7` and choosing the right one for your model can be very confusing.  There isn't a great deal of simple information to tell you which version you need based on the architecture of the processor on your Pi.
 
@@ -134,6 +122,8 @@ Alpine on the Raspberry Pi comes with a setup script which really helps to autom
 
 If you run `setup-alpine` you'll enter an interactive setup questionaire that will help you configure everything.  Some of the questions might be a bit confusing for those users who are new to Linux, networking and computers in general so here are some sample answers that can get you up and running quickly (however if you created an [answer file](AnswerFile) previously then skip this step):
 
+If you get anything wrong you can hit CTRL+C at the same time to cancel setup and start again. Just run setup again using the command above.
+
 DNS domain name type: `local`
 DNS nameserver type: `1.1.1.1`
 Timezone: `UTC`
@@ -179,6 +169,10 @@ This will automatically run everything in order.  However if you wanted to run i
 Getting around Alpine
 
  Access the SD card by `cd /media/mmcblk0p1/`
+
+
+Alpine Package Manager
+
 
 [Troubleshooting]
 #### Troubleshooting
