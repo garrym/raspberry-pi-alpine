@@ -29,16 +29,16 @@ And if you're still stuck after all that please feel free to open an issue or se
 
 There are currently 3 different versions of Alpine for the Raspberry Pi on the [Alpine downloads page](https://alpinelinux.org/downloads/); `armhf`, `aarch64` and `armv7` and choosing the right one for your model can be very confusing.  There isn't a great deal of simple information to tell you which version you need based on the architecture of the processor on your Pi.
 
-The following table shows the Raspberry Pi versions I've tried this script on so far.  I'll update with more as I test them:
+The following table shows the Raspberry Pi versions I've tried these instructions on so far.  I'll update with more as I test them:
 
 | Raspberry Pi Model | armhf | armv7 | aarch64 |
 | ------------------ | ----- | ----- | ------- |
 | A+                 |       |       |         |
 | B+                 |       |       |         |
-| 2B                 |       |<center>✓</center>|         |
+| 2B                 |       |✓|         |
 | 3B                 |       |       |         |
 | 3A+                |       |       |         |
-| 3B+                |       |<center>✓</center>|         |
+| 3B+                |       |✓|         |
 | 4B                 |       |       |         |
 | Zero               |       |       |         |
 | Zero W             |       |       |         |
@@ -47,22 +47,21 @@ The following table shows the Raspberry Pi versions I've tried this script on so
 ### <a id="FormatSDCard"></a> Formatting the SD card
 
 #### On Windows
-For the purposes of this guide I'll be using the FAT32 partition scheme. As a user who primarily uses Windows I've found that the easiest way to get started with Alpine is by formatting the entire SD card using FAT32 partition scheme.
+For the purposes of this guide I'll be using the FAT32 partition scheme. As a user who primarily uses Windows I've found that the easiest way to get started with Alpine is by formatting the entire SD card using FAT32.
 
-There are other partition schemes that may be more suitable for a Linux environment (e.g. ext4) but they do require a little more work to get up and running, they'll usually require a 3rd party partitioning tool as Windows does not natively support most Linux file system formats.  If you're choosing an alternative partition scheme you've probably got enough knowledge to know how to do it anyway.
+There are other partition schemes that may be more suitable for a Linux environment, such as ext4, but they do require a little more work to get up and running, they'll usually require a 3rd party partitioning tool as Windows does not natively support most Linux file system formats.  If you're choosing an alternative partition scheme you've probably got enough knowledge to know how to do it anyway.
 
-So to get started plug the SD card into your computer and open the disk management tool by typing `diskmgmt` in the start menu, then selecting the entry named 'Create and format hard disk partitions'.
+**Warning: Please be careful with the following instructions. You can potentially lose data if you are not careful.  I can't be held responsible for any loss of data caused by following these instructions.**
 
-The reason we use this tool over the _This PC_'_ view of drives in Windows 10 is that it shows you the physical disk, rather than just the formatted partitions. We need to make sure we delete all existing partitions on the SD card otherwise they will cause Alpine boot issues.
+1. Plug the SD card into your computer and ignore any warnings Windows may pop up with. It may offer to format the disk for you, we're going to do it ourselves so just close or cancel the window.
+2. Press the Start or Windows button on your taskbar then type `diskmgmt` and enter. The Windows Disk Management application will open.
+3. Locate your SD card on the listing 
+4. If the SD card has any partitions already first make sure **you are absolutely sure you want to lose all data on the disk**.  If you do then right click them and select _Delete Volume_ until there are none left.
+5. Right click the empty drive and create a primary partition of 512MB* formatted as FAT32, then assign it a drive letter.
 
-- Plug the SD card into your computer then go to start and type `diskmgmt` then enter. The Windows Disk Management application will open.
-- Locate your SD card on the listing and create a primary partition formatted as FAT32.
-- Once the card is formatted and appearing as a drive in Windows drive listing you can move on to the next step.
+* Don't worry that we're only creating a partition of 512MB. The rest of the space on the disk will become available later after running the Alpine setup script.
 
-
-- Plug the SD card into your computer and open Disk Management (instructions on how to do this, with screenshots)
-- Create a 512MB primary partition and assign a drive letter
-- Format the partition with FAT32. The rest of the space will become available later, this is just to get alpine up and running.
+**Important:** Make sure all partitions on your disk are removed prior to creating the new partition otherwise Alpine may have issues booting.
 
 ### <a id="CopyAlpine"></a> Copy Alpine to the SD card
 
