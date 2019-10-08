@@ -1,55 +1,71 @@
 # Installing Alpine Linux on a Raspberry Pi
-
 Alpine is a fast, lightweight Linux distribution that's easy to install and ideal for the Raspberry Pi. It's designed to be run on minimal hardware so it comes with a barebones setup and limited number of packages which makes it a great choice for those who want to know exactly what applications are running while minimising disk space and processor usage.
 
-### Installation
-1. Choose the correct Alpine version for your Raspberry Pi model
-2. Format your SD card using FAT32 as the partition scheme
-3. Extract the Alpine files and copy them to the SD card
-4. Add an answers file (optional)
-5. Safely eject the SD card, plug it into the Raspberry Pi and start it up
-6. Plug all your cables into the Raspberry Pi (making sure the power cable is last)
-7. Log in using the username `root` and blank password
-8. Run `setup-alpine` (or `setup-alpine -f /path-to-answer-file` if you added an answers file in step 4.)
+## Alpine Concepts
+Due to Alpine being a barebones Linux distribution it can be a bit trickier to get things set up than say Ubuntu or Raspbian. You will find that even some basic packages you're familiar with won't be available from a standard installation, but everything is deceptively easy to install and when you're finished you're guaranteed to only have installed only the tools you need rather than lots of unnecessary packages and background services.
 
-After you've followed these steps you will have a working Alpine installation
+Working with Alpine Linux is definitely worth the effort as you'll learn a huge amount about Linux and understand how to install applications that we usually take for granted in more widely used distributions.
+
+## Installation
+
+These installation instructions have been designed for absolute beginners to Raspberry Pi, Alpine and Linux in general.  If you have any issues while following them 
+
+1. [Choose the correct Alpine version for your Raspberry Pi model](ChooseAlpineVersion)
+2. [Format your SD card](FormatSDCard)
+3. [Copy Alpine to the SD card](CopyAlpine)
+4. [(Optional) Add an answers file](AddAnswersFile)
+5. [Plug the SD card in](PlugInSDCard)
+6. [Plug all the cables in](PlugCablesIn)
+7. [Log in for the first time](LogIn)
+8. [Run setup](RunSetup) or if you created an answers file [run setup with an answers file](RunSetupAnswersFile) instead
+9. [(Optional) Additional setup for user accounts, SSH, Firewall and Docker](AdditionalSetup)
+
+After you've followed these steps you will have a working Alpine installation.  Now you can follow the instructions on [Getting started with Alpine](GettingStarted).  However, if you got stuck or had unexpected results then please check out the [troubleshooting section](Troubleshooting).
+
+And if you're still stuck after all that please feel free to open an issue or send me a [Tweet](https://twitter.com/garrymarsland) and I'll do my best to help.
+
+## Installation
 
 
 
-Now you can following the instructions on [[Getting started with Alpine]] here.
+- Now it's time to run setup. If you provided an answer file type the following:
+
+    `setup-alpine -f /media/mmcblk0p1/<ANSWERFILE>`
+
+If you get anything wrong you can hit CTRL+C at the same time to cancel setup and start again. Just type setup-alpine again.
 
 
-
+[ChooseAlpineVersion]
 ### Choosing the correct Alpine version
 
-There are currently 3 different versions of Alpine for the Raspberry Pi and choosing the right one for your model can be confusing as there isn't a great deal of information to advise you. 
+There are currently 3 different versions of Alpine for the Raspberry Pi on the [Alpine downloads page](https://alpinelinux.org/downloads/); `armhf`, `aarch64` and `armv7` and choosing the right one for your model can be very confusing.  There isn't a great deal of simple information to tell you which version you need based on the architecture of the processor on your Pi.
 
-Here are my findings:
+The following table shows the Raspberry Pi versions I've tried this script on so far.  I'll update with more as I test them:
 
 | Raspberry Pi Model | armhf | armv7 | aarch64 |
 | ------------------ | ----- | ----- | ------- |
-| B+                 |       |       |         |
 | A+                 |       |       |         |
-| 2                  |       | Works |         |
-| 3                  |       | Works |         |
+| B+                 |       |       |         |
+| 2B                 |       |✓|         |
+| 3B                 |       |       |         |
+| 3A+                |       |       |         |
+| 3B+                |       |✓|         |
+| 4B                 |       |       |         |
+| Zero               |       |       |         |
+| Zero W             |       |       |         |
+| Zero WH            |       |       |         |
 
-#### armhf vs armv7 vs aarch64
-
-I'm going to investigate further and update this section.
-
-
-
+[FormatSDCard]
 ### Formatting the SD card
 
+#### On Windows
 For the purposes of this guide I'll be using the FAT32 partition scheme. As a user who primarily uses Windows I've found that the easiest way to get started with Alpine is by formatting the entire SD card using FAT32 partition scheme.
 
 There are other partition schemes that may be more suitable for a Linux environment (e.g. ext4) but they do require a little more work to get up and running, they'll usually require a 3rd party partitioning tool as Windows does not natively support most Linux file system formats.  If you're choosing an alternative partition scheme you've probably got enough knowledge to know how to do it anyway.
 
 So to get started plug the SD card into your computer and open the disk management tool by typing `diskmgmt` in the start menu, then selecting the entry named 'Create and format hard disk partitions'.
 
-When the to
-
-The reason we use this tool over the 'This PC' view of drives in Windows 10 is that it shows you the physical disk, rather than just the formatted partitions. We need to make sure we delete all existing partitions on the SD card otherwise they will cause Alpine boot issues.
+The reason we use this tool over the _This PC_'_ view of drives in Windows 10 is that it shows you the physical disk, rather than just the formatted partitions. We need to make sure we delete all existing partitions on the SD card otherwise they will cause Alpine boot issues.
 
 
 
@@ -58,66 +74,37 @@ The reason we use this tool over the 'This PC' view of drives in Windows 10 is t
 - Once the card is formatted and appearing as a drive in Windows drive listing you can move on to the next step.
 
 
+- Plug the SD card into your computer and open Disk Management (instructions on how to do this, with screenshots)
+- Create a 512MB primary partition and assign a drive letter
+- Format the partition with FAT32. The rest of the space will become available later, this is just to get alpine up and running.
 
 
+[CopyAlpine]
+### Copy Alpine to the SD card
 
+Alpine is great because you don't necessarily need to use a dedicated applixcation like Etcher to put it on the SD card.  You can just copy the files in Windows Explorer.
 
+- Extract the file (verify checksums)
 
-
-
-
-
-**Detailed instructions - Logging in**
-
-The default username for a new Alpine installation is `root` and the password is blank. This should get you access to the terminal.
-
-
-
-**Detailed instructions - Running setup-alpine**
-
-Alpine on the Raspberry Pi comes with a setup script which helps to automate a lot of the settings an features of the newly installed OS.  You can run it just by typing `setup-alpine` and following the instructions.
-
-Some of the answers might be a bit tricky for people newer to Linux or computers in general.
-
-[[I'll provide a list of detailed answers to get you up and running soon]]
-
-If you added an answers file previously, you'll need to specify the path to the file here. This can be a bit confusing because it won't reside where you would expect it in the root `/` . Instead it can be found at: `/media/mmcblk0p1/<ANSWERFILE>`
-
-
-
-Getting around Alpine
-
-Where is the SD
-
-
-
-
-
-#### Troubleshooting
-
-##### Black screen when booting the Raspberry Pi
-
-This typically happens when either the SD card isn't plugged in correctly or the Raspberry Pi can't recognise the boot sequence of the SD card.
-
-First make sure your SD card is seated correctly and restart the Raspberry Pi. If the issue still persists, try re-formatting the SD card, ensuring that all partitions are removed and the card is formatted using the FAT32 partition scheme.
-
-##### Monitor not recognising the Raspberry Pi
-
-The Raspberry Pi has some built in configuration that allows it to run in headless mode and ignore the HDMI port to save power. If the Raspberry Pi is booted without an HDMI cable connected then it will not recognise the monitor. There are some workarounds for this and you can alter the config.txt to permanently enable the HDMI port.
-
-Try to restart the Raspberry Pi with the HDMI cable connected.
-
-
-
-**Detailed instructions - Extract the Alpine files and copy them to the SD card**
-
-**Detailed instructions - Optionally include an answers file**
-
+[AddAnswersFile]
+### Add an Answers File
 When you run the `setup-alpine` script on your new Raspberry Pi Alpine installation you have the option of providing an answers file. This file will automatically answer all of the questions for you regarding keyboard layout, timezone, network devices etc. It's a good way to save time when setting up new Alpine installations as you won't have to manually answer all the setup questions.
 
-[[Here is a sample answer file to use as a template.]]
+You'll need to update all the values on the [answers file here](https://github.com/garrym/raspberry-pi-alpine/blob/master/setup-alpine.in).
 
-**Detailed instructions - Plugging in the SD card**
+replaced all the values for `<KEYBOARDLAYOUT>`, `<KEYBOARDVARIANT>`, `<HOSTNAME>`, `<IP>`, `<NETMASK>`, `<GATEWAY>` and `<DNS>` and copied
+
+You don't have to add an answers file for setup to run. If you don't provide one it will run in interactive mode asking you questions on each step.  An answers file just removes this step from setup and makes it easier if you're setting up more than one Pi to share the same settings.
+
+[PluginSDCard]
+### Plug in the SD Card
+Safely eject the SD card, plug it into the Raspberry Pi and start it up
+Where is the SD card slot?
+
+
+- Safely eject the SD card and plug it into your Raspberry Pi.
+    Important note for newbies: If you used a USB stick to plug the SD card into your Windows PC, you'll need to take that off. The SD card needs to go in the Raspberry Pi's SD card slot - not a USB slot!
+
 
 Ensure the Raspberry Pi is turned off prior to plugging in the SD card.  As the Raspberry Pi doesn't have a switch to turn it on or off, you'll need to make sure that either the power cable is unplugged or it's turned off at the plug socket.
 
@@ -125,34 +112,32 @@ Plugging an SD card in while the Raspberry Pi is working probably won't do any h
 
 
 
-## Find the right Alpine version for your Raspberry Pi
+[PlugCablesIn]
+### Plug the Cables In
+Plug all your cables into the Raspberry Pi (making sure the power cable is last)
 
-## Installation
-- Plug the SD card into your computer and open Disk Management (instructions on how to do this, with screenshots)
-- Create a 512MB primary partition and assign a drive letter
-- Format the partition with FAT32. The rest of the space will become available later, this is just to get alpine up and running.
-- Choose correct Alpine version for your Raspberry Pi
-    - Detailed list of which ones work
-- Extract the file (verify checksums)
-- Copy files to new folder
-- Copy optional answers file (don't forget to update all the values)
-- Safely eject the SD card and plug it into your Raspberry Pi.
-    Important note for newbies: If you used a USB stick to plug the SD card into your Windows PC, you'll need to take that off. The SD card needs to go in the Raspberry Pi's SD card slot - not a USB slot!
 
-- Once the Pi has booted up you should be provided with a login prompt.vEnter the username 'root' and you'll be in
+[LogIn]
+### Log In for the First Time
 
-- Now it's time to run setup. If you provided an answer file type the following:
+The default username for a new Alpine installation is `root` and the password is empty. This should get you access to the terminal where you'll be able to make whatever changes you want.
 
-    `setup-alpine -f /media/mmcblk0p1/<ANSWERFILE>`
+I highly recommend that you add a strong password to the root account immediately to stop unauthorised access to your Raspberry Pi. You can do this by using the command:
 
-If you get anything wrong you can hit CTRL+C at the same time to cancel setup and start again. Just type setup-alpine again.
+`sudo passwd root`
 
-## Standard answers to setup questions
+Once you've set the password you'll need to use it when logging in with the root account. It's also best practice with Linux to not use the root account unless you absolutely have to, instead using a secondary account for day-to-day access and only using root when it's absolutely required.
+
+[RunSetup]
+### Run Setup
+Alpine on the Raspberry Pi comes with a setup script which really helps to automate setting up the applications and features for new users.
+
+If you run `setup-alpine` you'll enter an interactive setup questionaire that will help you configure everything.  Some of the questions might be a bit confusing for those users who are new to Linux, networking and computers in general so here are some sample answers that can get you up and running quickly (however if you created an [answer file](AnswerFile) previously then skip this step):
 
 DNS domain name type: `local`
 DNS nameserver type: `1.1.1.1`
 Timezone: `UTC`
-For proxy type: `none`
+Proxy type: `none`
 NTP client: `chrony`
 SSH server: `openssh`
 Enter where to store configs: `mmcblk0p1`
@@ -160,18 +145,16 @@ APK cache directory: `/media/mmcblk0p1/cache`
 
 When choosing a mirror you can just press `f` this test the speed to all of the mirrors and choose the fastest, or `r` for a random mirror.
 
-## Don't forget to commit
+[RunSetupAnswersFile]
+### Run Setup with Answers File
+If you created an [answers file](AnswersFile) and copied it onto the SD card you should be able to provide it as an input parameter to the setup script which will then use those values to automate the setup script. To run the setup script with an answers file run the following command:
 
-Once you have made all the changes you want, you need to commit them to disk by typing:
+`setup-alpine -f /media/mmcblk0p1/<ANSWERFILE>`
 
-`lbu commit -d`
+Replacing the `<ANSWERFILE>` part with the name of the file.
 
-This ensures the changes are stored to disk and will re-apply when you restart.
-
-Installation should now be complete.
-
-
-## Post-Install Setup
+[AdditionalSetup]
+### Additional Setup
 
 There are some post-install setup scripts which will set up a number of things for you, such as:
 
@@ -190,33 +173,40 @@ You can run these scripts individually or all together.  To set them all up run 
 
 This will automatically run everything in order.  However if you wanted to run individual scripts, just use the same code above and replace `setup.sh` with `setup-packages.sh`, `setup-user.sh`, `setup-firewall.sh`, `setup-ssh.sh` or `setup-docker.sh` instead.
 
+[GettingStarted]
+### Getting Started
 
+Getting around Alpine
 
-## Alpine Concepts
+ Access the SD card by `cd /media/mmcblk0p1/`
 
-Due to Alpine being a barebones Linux distribution it can be a bit trickier to get things set up than say Ubuntu or Raspbian. You will find that even some basic packages you're used to won't be available from a standard installation, but everything is very easy to install.  You get to install just the tools you need to do the job.
+[Troubleshooting]
+#### Troubleshooting
 
-Working with Alpine Linux is definitely worth the effort as you'll learn a huge amount about Linux and understand how to install applications that we usually take for granted in more widely used distributions.
+##### Black screen when booting the Raspberry Pi
 
+This typically happens when either the SD card isn't plugged in correctly or the Raspberry Pi can't recognise the boot sequence of the SD card.
 
+First make sure your SD card is seated correctly and restart it by unplugging the USB power cable and plugging it back in.
 
+If the issue still persists try re-following the instructions for [formatting the SD card](FormatSDCard), making sure that all existing partitions have been removed and the card is formatted using the FAT32 partition scheme.
 
+##### Monitor not recognising the Raspberry Pi
 
-### Read-only file system
+The Raspberry Pi has some built in configuration that allows it to run in headless mode and ignore the HDMI port to save power. If the Raspberry Pi is booted without a HDMI cable connected then it will not recognise the monitor. There are some workarounds for this and you can alter the config.txt to permanently enable the HDMI port.
 
-The installation mode we will be using for the Raspberry Pi is called `sys mode` and by default this is a read-only file system. This means any applications you install or configuration changes you make will not be saved after restarting.  I prefer this setting as the Raspberry Pi feels more like an immutable appliance rather than a computer with mutable data.
+Try to restart the Raspberry Pi with the HDMI cable connected.
 
-In order to persist any changes you will need to commit afterwards. You should do this regularly when working with Alpine by running the following command:
+[DontForgetToCommit]
+## Important: Don't forget to commit!
+
+This Alpine installation runs in `sys mode` which is a read-only file system.  This means any applications you install, configuration changes you make or files you write will not be saved after restarting unless you commit them using the command:
 
 `lbu commit -d`
 
-Once you have done this all changes will be saved and be present after restarting.
+It's important to remember to do this when working with Alpine. It can be very frustrating when you forget to commit and all your changes disappear after a restart. You can commit as regularly as you want and it won't cause any problems. Commit early, commit often.
 
-It is possible to set up the Raspberry Pi to do a classic install (normal writable file system) but this guide won't cover that.
-
-
-
-
+I prefer using `sys mode` with Alpine as it makes your device feel more like an appliance with immutable data that you can guarantee will be in the same state even after restarting, however it is possible to have a writable filesystem by doing the classic Alpine install. For more information on this check out the [Alpine Wiki on classic install vs sys mode](https://wiki.alpinelinux.org/wiki/Classic_install_or_sys_mode_on_Raspberry_Pi).
 
 ## Useful resources
 
@@ -227,5 +217,3 @@ It is possible to set up the Raspberry Pi to do a classic install (normal writab
 - https://wiki.alpinelinux.org/wiki/Configure_Networking
 - https://wiki.alpinelinux.org/wiki/Classic_install_or_sys_mode_on_Raspberry_Pi
 - https://beta.docs.alpinelinux.org/user-handbook/0.1a/Installing/setup_alpine.html
-
-## 
