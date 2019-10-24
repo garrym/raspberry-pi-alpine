@@ -34,7 +34,7 @@ The following table shows the Raspberry Pi versions I've tried these instruction
 | Raspberry Pi Model | armhf | armv7 | aarch64 |
 | ------------------ | ----- | ----- | ------- |
 | A+                 |       |       |         |
-| B+                 |       |       |         |
+| B+                 |✓|✗|         |
 | 2B                 |       |✓|         |
 | 3B                 |       |       |         |
 | 3A+                |       |       |         |
